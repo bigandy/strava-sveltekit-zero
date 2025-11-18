@@ -9,7 +9,7 @@
 
 <svelte:head>
 	<link rel="icon" href={favicon} />
-	<title>Layout</title>
+	<title>Strava Sveltekit Zero</title>
 </svelte:head>
 
 <main>

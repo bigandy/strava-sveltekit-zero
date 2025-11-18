@@ -22,6 +22,7 @@
 		"schema:generate": "drizzle-zero generate --format"
 	},
 	"devDependencies": {
+		"@tanstack/svelte-table": "9.0.0-alpha.10",
 		"@auth/drizzle-adapter": "1.11.1",
 		"@mapbox/polyline": "1.2.1",
 		"@rocicorp/zero": "0.24.3000000000",
@@ -44,6 +45,7 @@
 		"svelte-check": "4.3.4",
 		"throttled-queue": "3.0.0",
 		"typescript": "5.9.3",
+		"valibot": "1.1.0",
 		"vite": "7.2.2"
 	},
 	"dependencies": {
