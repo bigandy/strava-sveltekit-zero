@@ -10,370 +10,232 @@
 
 import type { Row } from "@rocicorp/zero";
 import { createBuilder } from "@rocicorp/zero";
-import type { ZeroCustomType } from "drizzle-zero";
-import type { default as zeroSchema } from "./drizzle-zero.config";
 
+const accountTable = {
+  name: "account",
+  columns: {
+    id: {
+      type: "string",
+      optional: false,
+      customType: null as unknown as string,
+    },
+    providerAccountId: {
+      type: "string",
+      optional: false,
+      customType: null as unknown as string,
+      serverName: "provider_account_id",
+    },
+    providerId: {
+      type: "string",
+      optional: false,
+      customType: null as unknown as string,
+      serverName: "provider_id",
+    },
+    userId: {
+      type: "string",
+      optional: false,
+      customType: null as unknown as string,
+      serverName: "user_id",
+    },
+    access_token: {
+      type: "string",
+      optional: false,
+      customType: null as unknown as string,
+    },
+    refresh_token: {
+      type: "string",
+      optional: false,
+      customType: null as unknown as string,
+    },
+    id_token: {
+      type: "string",
+      optional: true,
+      customType: null as unknown as string,
+    },
+    access_token_expires: {
+      type: "number",
+      optional: false,
+      customType: null as unknown as number,
+    },
+    refreshTokenExpiresAt: {
+      type: "number",
+      optional: true,
+      customType: null as unknown as number,
+      serverName: "refresh_token_expires_at",
+    },
+    scope: {
+      type: "string",
+      optional: true,
+      customType: null as unknown as string,
+    },
+    password: {
+      type: "string",
+      optional: true,
+      customType: null as unknown as string,
+    },
+    createdAt: {
+      type: "number",
+      optional: true,
+      customType: null as unknown as number,
+      serverName: "created_at",
+    },
+    updatedAt: {
+      type: "number",
+      optional: true,
+      customType: null as unknown as number,
+      serverName: "updated_at",
+    },
+  },
+  primaryKey: ["id"],
+} as const;
+const activitiesTable = {
+  name: "activities",
+  columns: {
+    id: {
+      type: "string",
+      optional: false,
+      customType: null as unknown as string,
+    },
+    name: {
+      type: "string",
+      optional: false,
+      customType: null as unknown as string,
+    },
+    description: {
+      type: "string",
+      optional: true,
+      customType: null as unknown as string,
+    },
+    kudos: {
+      type: "number",
+      optional: false,
+      customType: null as unknown as number,
+    },
+    start: {
+      type: "number",
+      optional: false,
+      customType: null as unknown as number,
+    },
+    elapsedTime: {
+      type: "number",
+      optional: false,
+      customType: null as unknown as number,
+    },
+    movingTime: {
+      type: "number",
+      optional: false,
+      customType: null as unknown as number,
+    },
+    type: {
+      type: "string",
+      optional: false,
+      customType: null as unknown as string,
+    },
+    elevation: {
+      type: "number",
+      optional: false,
+      customType: null as unknown as number,
+    },
+    distance: {
+      type: "number",
+      optional: false,
+      customType: null as unknown as number,
+    },
+    visibility: {
+      type: "string",
+      optional: false,
+      customType: null as unknown as string,
+    },
+    summaryPolyline: {
+      type: "string",
+      optional: false,
+      customType: null as unknown as string,
+    },
+    startCoords: {
+      type: "string",
+      optional: true,
+      customType: null as unknown as string,
+    },
+    endCoords: {
+      type: "string",
+      optional: true,
+      customType: null as unknown as string,
+    },
+    updatedAt: {
+      type: "string",
+      optional: true,
+      customType: null as unknown as string,
+    },
+  },
+  primaryKey: ["id"],
+  serverName: "activity",
+} as const;
+const userTable = {
+  name: "user",
+  columns: {
+    id: {
+      type: "string",
+      optional: false,
+      customType: null as unknown as string,
+    },
+    name: {
+      type: "string",
+      optional: false,
+      customType: null as unknown as string,
+    },
+    email: {
+      type: "string",
+      optional: false,
+      customType: null as unknown as string,
+    },
+    emailVerified: {
+      type: "boolean",
+      optional: true,
+      customType: null as unknown as boolean,
+      serverName: "email_verified",
+    },
+    image: {
+      type: "string",
+      optional: true,
+      customType: null as unknown as string,
+    },
+    createdAt: {
+      type: "number",
+      optional: true,
+      customType: null as unknown as number,
+      serverName: "created_at",
+    },
+    updatedAt: {
+      type: "number",
+      optional: true,
+      customType: null as unknown as number,
+      serverName: "updated_at",
+    },
+  },
+  primaryKey: ["id"],
+} as const;
+const userRelationships = {
+  provider: [
+    {
+      sourceField: ["id"],
+      destField: ["userId"],
+      destSchema: "account",
+      cardinality: "one",
+    },
+  ],
+} as const;
 /**
  * The Zero schema object.
  * This type is auto-generated from your Drizzle schema definition.
  */
 export const schema = {
   tables: {
-    account: {
-      name: "account",
-      columns: {
-        id: {
-          type: "string",
-          optional: false,
-          customType: null as unknown as ZeroCustomType<
-            typeof zeroSchema,
-            "account",
-            "id"
-          >,
-        },
-        providerAccountId: {
-          type: "string",
-          optional: false,
-          customType: null as unknown as ZeroCustomType<
-            typeof zeroSchema,
-            "account",
-            "providerAccountId"
-          >,
-          serverName: "provider_account_id",
-        },
-        providerId: {
-          type: "string",
-          optional: false,
-          customType: null as unknown as ZeroCustomType<
-            typeof zeroSchema,
-            "account",
-            "providerId"
-          >,
-          serverName: "provider_id",
-        },
-        userId: {
-          type: "string",
-          optional: false,
-          customType: null as unknown as ZeroCustomType<
-            typeof zeroSchema,
-            "account",
-            "userId"
-          >,
-          serverName: "user_id",
-        },
-        access_token: {
-          type: "string",
-          optional: false,
-          customType: null as unknown as ZeroCustomType<
-            typeof zeroSchema,
-            "account",
-            "access_token"
-          >,
-        },
-        refresh_token: {
-          type: "string",
-          optional: false,
-          customType: null as unknown as ZeroCustomType<
-            typeof zeroSchema,
-            "account",
-            "refresh_token"
-          >,
-        },
-        id_token: {
-          type: "string",
-          optional: true,
-          customType: null as unknown as ZeroCustomType<
-            typeof zeroSchema,
-            "account",
-            "id_token"
-          >,
-        },
-        access_token_expires: {
-          type: "number",
-          optional: false,
-          customType: null as unknown as ZeroCustomType<
-            typeof zeroSchema,
-            "account",
-            "access_token_expires"
-          >,
-        },
-        refreshTokenExpiresAt: {
-          type: "number",
-          optional: true,
-          customType: null as unknown as ZeroCustomType<
-            typeof zeroSchema,
-            "account",
-            "refreshTokenExpiresAt"
-          >,
-          serverName: "refresh_token_expires_at",
-        },
-        scope: {
-          type: "string",
-          optional: true,
-          customType: null as unknown as ZeroCustomType<
-            typeof zeroSchema,
-            "account",
-            "scope"
-          >,
-        },
-        password: {
-          type: "string",
-          optional: true,
-          customType: null as unknown as ZeroCustomType<
-            typeof zeroSchema,
-            "account",
-            "password"
-          >,
-        },
-        createdAt: {
-          type: "number",
-          optional: true,
-          customType: null as unknown as ZeroCustomType<
-            typeof zeroSchema,
-            "account",
-            "createdAt"
-          >,
-          serverName: "created_at",
-        },
-        updatedAt: {
-          type: "number",
-          optional: true,
-          customType: null as unknown as ZeroCustomType<
-            typeof zeroSchema,
-            "account",
-            "updatedAt"
-          >,
-          serverName: "updated_at",
-        },
-      },
-      primaryKey: ["id"],
-    },
-    activities: {
-      name: "activities",
-      columns: {
-        id: {
-          type: "string",
-          optional: false,
-          customType: null as unknown as ZeroCustomType<
-            typeof zeroSchema,
-            "activities",
-            "id"
-          >,
-        },
-        name: {
-          type: "string",
-          optional: false,
-          customType: null as unknown as ZeroCustomType<
-            typeof zeroSchema,
-            "activities",
-            "name"
-          >,
-        },
-        description: {
-          type: "string",
-          optional: true,
-          customType: null as unknown as ZeroCustomType<
-            typeof zeroSchema,
-            "activities",
-            "description"
-          >,
-        },
-        kudos: {
-          type: "number",
-          optional: false,
-          customType: null as unknown as ZeroCustomType<
-            typeof zeroSchema,
-            "activities",
-            "kudos"
-          >,
-        },
-        start: {
-          type: "number",
-          optional: false,
-          customType: null as unknown as ZeroCustomType<
-            typeof zeroSchema,
-            "activities",
-            "start"
-          >,
-        },
-        elapsedTime: {
-          type: "number",
-          optional: false,
-          customType: null as unknown as ZeroCustomType<
-            typeof zeroSchema,
-            "activities",
-            "elapsedTime"
-          >,
-        },
-        movingTime: {
-          type: "number",
-          optional: false,
-          customType: null as unknown as ZeroCustomType<
-            typeof zeroSchema,
-            "activities",
-            "movingTime"
-          >,
-        },
-        type: {
-          type: "string",
-          optional: false,
-          customType: null as unknown as ZeroCustomType<
-            typeof zeroSchema,
-            "activities",
-            "type"
-          >,
-        },
-        elevation: {
-          type: "number",
-          optional: false,
-          customType: null as unknown as ZeroCustomType<
-            typeof zeroSchema,
-            "activities",
-            "elevation"
-          >,
-        },
-        distance: {
-          type: "number",
-          optional: false,
-          customType: null as unknown as ZeroCustomType<
-            typeof zeroSchema,
-            "activities",
-            "distance"
-          >,
-        },
-        visibility: {
-          type: "string",
-          optional: false,
-          customType: null as unknown as ZeroCustomType<
-            typeof zeroSchema,
-            "activities",
-            "visibility"
-          >,
-        },
-        summaryPolyline: {
-          type: "string",
-          optional: false,
-          customType: null as unknown as ZeroCustomType<
-            typeof zeroSchema,
-            "activities",
-            "summaryPolyline"
-          >,
-        },
-        startCoords: {
-          type: "string",
-          optional: true,
-          customType: null as unknown as ZeroCustomType<
-            typeof zeroSchema,
-            "activities",
-            "startCoords"
-          >,
-        },
-        endCoords: {
-          type: "string",
-          optional: true,
-          customType: null as unknown as ZeroCustomType<
-            typeof zeroSchema,
-            "activities",
-            "endCoords"
-          >,
-        },
-        updatedAt: {
-          type: "string",
-          optional: true,
-          customType: null as unknown as ZeroCustomType<
-            typeof zeroSchema,
-            "activities",
-            "updatedAt"
-          >,
-        },
-      },
-      primaryKey: ["id"],
-      serverName: "activity",
-    },
-    user: {
-      name: "user",
-      columns: {
-        id: {
-          type: "string",
-          optional: false,
-          customType: null as unknown as ZeroCustomType<
-            typeof zeroSchema,
-            "user",
-            "id"
-          >,
-        },
-        name: {
-          type: "string",
-          optional: false,
-          customType: null as unknown as ZeroCustomType<
-            typeof zeroSchema,
-            "user",
-            "name"
-          >,
-        },
-        email: {
-          type: "string",
-          optional: false,
-          customType: null as unknown as ZeroCustomType<
-            typeof zeroSchema,
-            "user",
-            "email"
-          >,
-        },
-        emailVerified: {
-          type: "boolean",
-          optional: true,
-          customType: null as unknown as ZeroCustomType<
-            typeof zeroSchema,
-            "user",
-            "emailVerified"
-          >,
-          serverName: "email_verified",
-        },
-        image: {
-          type: "string",
-          optional: true,
-          customType: null as unknown as ZeroCustomType<
-            typeof zeroSchema,
-            "user",
-            "image"
-          >,
-        },
-        createdAt: {
-          type: "number",
-          optional: true,
-          customType: null as unknown as ZeroCustomType<
-            typeof zeroSchema,
-            "user",
-            "createdAt"
-          >,
-          serverName: "created_at",
-        },
-        updatedAt: {
-          type: "number",
-          optional: true,
-          customType: null as unknown as ZeroCustomType<
-            typeof zeroSchema,
-            "user",
-            "updatedAt"
-          >,
-          serverName: "updated_at",
-        },
-      },
-      primaryKey: ["id"],
-    },
+    account: accountTable,
+    activities: activitiesTable,
+    user: userTable,
   },
   relationships: {
-    user: {
-      provider: [
-        {
-          sourceField: ["id"],
-          destField: ["userId"],
-          destSchema: "account",
-          cardinality: "one",
-        },
-      ],
-    },
+    user: userRelationships,
   },
   enableLegacyQueries: true,
   enableLegacyMutators: true,
@@ -388,17 +250,17 @@ export type Schema = typeof schema;
  * Represents a row from the "account" table.
  * This type is auto-generated from your Drizzle schema definition.
  */
-export type Account = Row<Schema["tables"]["account"]>;
+export type Account = Row<typeof accountTable>;
 /**
  * Represents a row from the "activities" table.
  * This type is auto-generated from your Drizzle schema definition.
  */
-export type Activity = Row<Schema["tables"]["activities"]>;
+export type Activity = Row<typeof activitiesTable>;
 /**
  * Represents a row from the "user" table.
  * This type is auto-generated from your Drizzle schema definition.
  */
-export type User = Row<Schema["tables"]["user"]>;
+export type User = Row<typeof userTable>;
 
 /**
  * Represents the Zero schema query builder.
