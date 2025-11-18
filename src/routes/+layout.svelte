@@ -20,9 +20,8 @@
 
 <style>
 	main {
-		border: 2px solid greenyellow;
+		padding: 2rem;
 		height: stretch;
-		width: 800px;
 		margin-inline: auto;
 	}
 </style>

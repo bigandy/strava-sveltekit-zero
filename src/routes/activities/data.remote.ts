@@ -2,7 +2,7 @@ import { query, command, getRequestEvent } from '$app/server';
 import { db } from '$lib/server/db';
 import * as v from 'valibot';
 
-import { getStravaActivities, writeActivitiesToDB, deleteActivities } from '$lib/server/strava/utils';
+import { getStravaActivities, writeActivitiesToDB, deleteActivities, getAllStravaActivities } from '$lib/server/strava/utils';
 import { auth } from '$lib/auth';
 
 export const getActivities = query(async () => {
@@ -24,13 +24,12 @@ export const deleteStravaActivities = query(async () => {
 })
 
 
-export const fetchLatestActivities = command(async () => {
+export const fetchLatestActivities = query(async () => {
 
     const event = getRequestEvent();
     const session = await auth.api.getSession({
         headers: event.request.headers,
     });
-    console.log({session});
 
     const stravaActivities = await getStravaActivities(session.account);
 
@@ -39,11 +38,15 @@ export const fetchLatestActivities = command(async () => {
 
 	// Put them in the database!
 	await writeActivitiesToDB(stravaActivities);
-	// await db.sql`
-	// 	UPDATE item
-	// 	SET likes = likes + 1
-	// 	WHERE id = ${id}
-	// `;
 
-    return;
+});
+
+export const fetchAllStravaActivities = command(async () => {
+
+    const event = getRequestEvent();
+    const session = await auth.api.getSession({
+        headers: event.request.headers,
+    });
+
+    await getAllStravaActivities(session.account);
 });
